@@ -60,12 +60,13 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     
                         sh """
                             cd Brainwave_Matrix_Intern/k8-eksctl
                             terraform plan
                         """
-                    
+                    }
                 }
             }
         }
@@ -74,12 +75,14 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     
                         sh """
                             ls -al
                             cd Brainwave_Matrix_Intern/k8-eksctl
                             terraform apply -auto-approve
                         """
+                    }
                     
                 }
             }
