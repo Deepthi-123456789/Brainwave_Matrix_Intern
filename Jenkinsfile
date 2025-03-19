@@ -35,12 +35,11 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script {
-                    {
                         sh """
-                            cd Brainwave_Matrix_Intern/k8-eksctl
+                            cd case-study/k8-eksctl
                             terraform init -reconfigure
                         """
-                    }
+                    
                 }
             }
         }
