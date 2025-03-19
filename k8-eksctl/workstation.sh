@@ -35,21 +35,6 @@ fi # fi means reverse of if, indicating condition end
 yum install -y yum-utils
 VALIDATE $? "Installed yum-utils"
 
-# Adding Docker repository
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-VALIDATE $? "Added docker repo"
-
-# Installing Docker components
-yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-VALIDATE $? "Installed docker components"
-
-# Starting and enabling Docker
-systemctl start docker
-VALIDATE $? "Started docker"
-
-systemctl enable docker
-VALIDATE $? "Enabled docker"
-
 # Adding centos user to docker group
 usermod -aG docker centos
 VALIDATE $? "Added centos user to docker group"
@@ -73,19 +58,3 @@ sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 VALIDATE $? "kubens installation"
 
-# Installing Helm
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-chmod 700 get_helm.sh
-./get_helm.sh
-
-# Adding Helm repo for AWS EBS CSI Driver
-helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
-helm repo update
-
-# Installing AWS EBS CSI Driver via Helm
-helm upgrade --install aws-ebs-csi-driver \
-    --namespace kube-system \
-    aws-ebs-csi-driver/aws-ebs-csi-driver
-VALIDATE $? "AWS EBS CSI Driver installation"
-
-echo -e "$G All required components have been installed successfully! $N"
