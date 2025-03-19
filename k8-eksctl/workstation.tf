@@ -16,11 +16,11 @@ module "ec2_instance" {
   }
 }
 
-resource "aws_security_group" "ekctl" {
-  name        = "ekctl"
-  description = "created for ekctl"
+resource "aws_security_group" "ekl" {
+  name        = "ekl"
+  description = "created for ekl"
   tags = {
-    Name = "ekctl"
+    Name = "ekl"
   }
   ingress {
     description = "all ports"
