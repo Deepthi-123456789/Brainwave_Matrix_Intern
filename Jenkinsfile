@@ -99,8 +99,23 @@ pipeline {
                 }
             }
         }
+        stage('Provision EKS Cluster') {
+            when { expression { params.action == 'create' } }
+            steps {
+                dir('Brainwave_Matrix_Intern/k8-eksctl') {
+                    script {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                            sh '''
+                                # Provision the EKS cluster using eksctl
+                                eksctl create cluster -f eks.yaml 
+                            '''
+                        }
+                    }
+                }
+            }
+        }
 
-       stage('Deploying Nginx Application') {
+        stage('Deploying Nginx Application') {
             steps{
                 script{
                     dir('web') {
