@@ -6,7 +6,7 @@ module "ec2_instance" {
   instance_type          = "t2.micro"
   # key_name               = "user1"
   # monitoring             = true
-  vpc_security_group_ids = [aws_security_group.eksctl.id]
+  vpc_security_group_ids = [aws_security_group.ekl.id]
   subnet_id              = "subnet-02cc37d094c8acc11"
   user_data = file("workstation.sh")
 
