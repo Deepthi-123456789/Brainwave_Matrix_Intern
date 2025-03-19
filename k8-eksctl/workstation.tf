@@ -6,7 +6,7 @@ module "ec2_instance" {
   instance_type          = "t2.micro"
   # key_name               = "user1"
   # monitoring             = true
-  vpc_security_group_ids = [aws_security_group.allow.id]
+  vpc_security_group_ids = [aws_security_group.eksctl.id]
   subnet_id              = "subnet-02cc37d094c8acc11"
   user_data = file("workstation.sh")
 
@@ -16,11 +16,11 @@ module "ec2_instance" {
   }
 }
 
-resource "aws_security_group" "allow" {
-  name        = "allow_ekctl"
+resource "aws_security_group" "eksctl" {
+  name        = "eksctl"
   description = "created for ekctl"
   tags = {
-    Name = "allow_ekctl"
+    Name = "eksctl"
   }
   ingress {
     description = "all ports"
