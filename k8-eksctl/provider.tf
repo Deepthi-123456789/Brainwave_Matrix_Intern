@@ -6,13 +6,6 @@ terraform {
     }
   }
   
-  backend "s3" {
-    bucket = "pjdevops-remote"
-    key    = "ekcs"
-    region = "us-east-1"
-    dynamodb_table = "pjdevops-remote-locking"
-    }
-
 }
 
 provider "aws" {
